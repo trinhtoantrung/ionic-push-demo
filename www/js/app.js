@@ -5,15 +5,19 @@
 // the 2nd parameter is an array of 'requires'
 angular.module('starter', ['ionic'])
 
-  .run(function ($ionicPlatform) {
-    $ionicPlatform.ready(function () {
-      var push = new Ionic.Push({
-        "debug": true
-      });
+    .run(function ($ionicPlatform) {
+        $ionicPlatform.ready(function () {
+            var push = new Ionic.Push({
+                "onNotification": function(notification) {
+                    alert('Received push notification!');
+                }
+            });
 
-      push.register(function (token) {
-        console.log("Device token:", token.token);
-        push.saveToken(token);  // persist the token in the Ionic Platform
-      });
-    });
-  })
+            push.register(function (token) {
+                console.log("Device token:", token.token);
+                push.saveToken(token);  // persist the token in the Ionic Platform
+                alert("Device token: " + token);
+            });
+
+        });
+    })
